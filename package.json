@@ -1,0 +1,20 @@
+{
+  "name": "lg-webpack",
+  "author": "LG3i",
+  "description": "Webpack & React test",
+  "version": "0.0.1",
+  "license": "ISC",
+  "main": "app/main.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack-dev.config.js --devtool inline-source-map --hot --progress --colors --content-base build --port 8080",
+    "prod": "webpack-dev-server --config webpack-prod.config.js --progress --colors --content-base build --port 8081"
+  },
+  "dependencies": {
+    "react": "^0.13.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^4.0.0",
+    "babel-runtime": "^4.6.6",
+    "webpack-dev-server": "^1.7.0"
+  }
+}
