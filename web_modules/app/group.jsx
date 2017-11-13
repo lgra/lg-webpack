@@ -7,7 +7,9 @@ import RadioGroup from "forms/radiogroup"
 import Radio from "forms/radio"
 
 import shouldUpdate from "utils/should-update-decorator"
+import renderDuration from "utils/render-duration-decorator"
 
+@renderDuration
 @shouldUpdate()
 export default class Group extends React.Component {
 
