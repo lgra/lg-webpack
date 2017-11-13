@@ -1,0 +1,7 @@
+@import "shared/var.css";
+
+.group-current-value {
+  margin-left: var(--gutter-x);
+  opacity: .5;
+  font-style: italic;
+}

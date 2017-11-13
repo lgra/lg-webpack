@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom'
 
 import Group from "./group"
 
+import renderDuration from "utils/render-duration-decorator"
+
+@renderDuration
 export default class App extends React.Component {
 
   render() {

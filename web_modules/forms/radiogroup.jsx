@@ -9,6 +9,9 @@ import dispatchCustomEvent from "utils/dispatch-custom-event"
 
 var salt = 0
 
+import shouldUpdate from "utils/should-update-decorator"
+
+@shouldUpdate()
 export default class RadioGroup extends Component {
 
   constructor(props) {

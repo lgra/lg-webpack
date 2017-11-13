@@ -20,6 +20,9 @@ import Icon from "icon"
 
 var salt = 0
 
+import shouldUpdate from "utils/should-update-decorator"
+
+@shouldUpdate()
 export default class Radio extends Component {
 
   constructor(props) {
