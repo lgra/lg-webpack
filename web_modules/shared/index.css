@@ -1,0 +1,10 @@
+@import "shared/var.css";
+
+.ui-control {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.ui-control + .ui-control {
+  margin-left: calc(var(--gutter-x) / 4);
+}

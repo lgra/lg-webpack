@@ -1,77 +1,55 @@
----
-# babel support more syntax stuff than eslint for now
-# https://github.com/babel/babel-eslint
-parser: babel-eslint
-
-ecmaFeatures:
-  arrowFunctions: true
-  binaryLiterals: true
-  blockBindings: true
-  defaultParams: true
-  forOf: true
-  generators: true
-  objectLiteralComputedProperties: true
-  objectLiteralDuplicateProperties: true
-  objectLiteralShorthandMethods: true
-  objectLiteralShorthandProperties: true
-  octalLiterals: true
-  regexUFlag: true
-  regexYFlag: true
-  superInFunctions: true
-  templateStrings: true
-  unicodeCodePointEscapes: true
-  # globalReturn: true
-  jsx: true
-
-env:
-  browser: true
-  node: true
-
-globals:
-  __DEV__: true
-  __PROD__: true
-
-# 0: off, 1: warning, 2: error
-rules:
-  # semicolons are useless
-  semi: 0
-
-  # @todo use the line below
-  //quotes: [2, "double"]
-  quotes: 0
-
-  # 2 spaces indentation,
-  # indent: [2, 2]
-
-  # we do not need use strict in modules
-  # see https://github.com/eslint/eslint/issues/1578
-  # so for now forbid this
-  strict: [2, "never"]
-
-  # trailing coma are cool for diff
-  no-comma-dangle: 0
-
-  # enforce comma at eol (never before)
-  comma-style: [2, "last"]
-
-  # @lgra do not like this rules
-  dot-notation: 0
-  eol-last: 0
-  no-mixed-spaces-and-tabs: 0
-
-  # @todo remove this options and update the code
-  no-shadow: 0 # use different names for variables
-  no-multi-spaces: 0 # @todo: some spaces to remove
-  comma-spacing: 0 # @todo: some space add some spaces after
-  no-trailing-spaces: 0 # @todo remove trailing space
-  no-unused-vars: 0 # @todo remove unused vars
-  no-use-before-define: 0 # @todo use imports for this
-  no-spaced-func: 0
-  no-extra-bind: 0 # avoid useless binding
-  no-space-before-semi: 0
-  no-lone-blocks: 0
-  yoda: 0
-  no-loop-func: 0 # we should avoid that
-  key-spacing: 0
-  consistent-return: 0
-  no-return-assign: 0
+// babel support more syntax stuff than eslint for now
+// # https://github.com/babel/babel-eslint
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel",
+    "react"
+  ],
+  "env": {
+      "browser": true,
+      "node": true
+  },
+  "globals": {
+      "__DEV__": true,
+      "__PROD__": true
+  },
+  // 0: off, 1: warning, 2: error
+  "rules": {
+      "semi": 0, // semicolons are useless
+      "quotes": 0, // @todo use the line below - quotes: [2, "double"]
+      "strict": [
+          2,
+          "never"
+      ], // 2 spaces indentation - we do not need use strict in modules https://github.com/eslint/eslint/issues/1578
+      "no-comma-dangle": 0, // trailing coma are cool for diff
+      "comma-style": [
+          2,
+          "last"
+      ], // enforce comma at eol (never before)
+      "dot-notation": 0,
+      "eol-last": 0,
+      "no-mixed-spaces-and-tabs": 0,
+      // @todo remove this options and update the code
+      "no-shadow": 0, // use different names for variables
+      "no-multi-spaces": 0, // @todo: some spaces to remove
+      "comma-spacing": 0, // @todo: some space add some spaces after
+      "no-trailing-spaces": 0, // @todo remove trailing space
+      "no-unused-vars": 0, // @todo remove unused vars
+      "no-use-before-define": 0, // @todo use imports for this
+      "no-spaced-func": 0,
+      "no-extra-bind": 0, // avoid useless binding
+      "no-space-before-semi": 0,
+      "no-lone-blocks": 0,
+      "yoda": 0,
+      "no-loop-func": 0, // we should avoid that
+      "key-spacing": 0,
+      "consistent-return": 0,
+      "no-return-assign": 0,
+      "no-underscore-dangle": 0,
+      "babel/new-cap": 1,
+      "no-dupe-keys": 2,
+      "react/jsx-no-duplicate-props": 2,
+      "react/jsx-no-undef": 2
+  }
+}

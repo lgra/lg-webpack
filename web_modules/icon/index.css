@@ -1,0 +1,10 @@
+.svgIcon {
+  width: 1em;  /* fix IE, which default width to 300px */
+  height: 1em;
+  line-height: 1;
+  vertical-align: middle;
+  fill: currentColor;
+}
+.svgIcon--half {
+  width: 0.5em;
+}

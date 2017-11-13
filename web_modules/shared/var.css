@@ -1,0 +1,13 @@
+:root {
+  
+    --color-focus: #BFDFFD;
+    --focus-shadow: inset .2em 0 var(--color-focus), inset -0.2em 0 var(--color-focus), inset 0 .2em var(--color-focus), inset 0 -0.2em var(--color-focus);
+    --focus-radius: .4em;
+    --color-disabled: #b9b9b9;
+    --color-control: #00739e;
+    --color-highlighted: #F88228;
+    --color-highlighted-lighthover: color(var(--color-highlighted) lightness(20%));
+    --gutter-x: 1rem;
+    --gutter-y: calc(var(--gutter-x) * .75);
+    
+  }

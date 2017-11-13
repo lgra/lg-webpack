@@ -1,1 +1,9 @@
+.DS_Store
 node_modules
+
+dist/
+
+npm-debug.log
+test/*.html
+
+src/config.json

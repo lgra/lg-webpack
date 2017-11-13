@@ -6,16 +6,43 @@
   "license": "ISC",
   "main": "app/main.js",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack-dev.config.js --devtool inline-source-map --hot --progress --colors --content-base build --port 8080",
-    "prod": "webpack-dev-server --config webpack-prod.config.js --progress --colors --content-base build --port 8081"
+    "start": "node scripts/server \"../webpack-dev.config\"",
+    "build": "webpack --config webpack-prod.config.js --progress --colors"
   },
   "dependencies": {
-    "react": "^0.13.0"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "classnames": "^2.1.0"
   },
   "devDependencies": {
-    "babel-loader": "^4.0.0",
-    "babel-runtime": "^4.6.6",
-    "eslint-loader": "^0.4.0",
-    "webpack-dev-server": "^1.7.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "classnames": "^2.1.0",
+
+    "babel-core": "*",
+    "babel-eslint": "*",
+    "babel-loader": "*",
+    "babel-plugin-transform-decorators-legacy": "*",
+    "babel-preset-env": "*",
+    "babel-preset-react": "*",
+    "babel-preset-stage-0": "*",
+    "css-loader": "*",
+    "file-loader": "*",
+    "raw-loader": "*",
+    "style-loader": "*",
+    "postcss-loader": "*",
+    "postcss-assets": "*",
+    "postcss-cssnext": "*",
+    "postcss-import": "*",
+    "postcss-reporter": "*",
+    "react-hot-loader": "*",
+    "eslint": "*",
+    "eslint-loader": "*",
+    "eslint-plugin-babel": "*",
+    "eslint-plugin-react": "*",
+    "webpack": "*",
+    "webpack-dev-server": "*"
   }
 }

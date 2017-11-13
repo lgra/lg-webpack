@@ -1,5 +1,7 @@
-var makeWebPackConfig = require('./make-webpack-config')
+var path = require("path")
+var makeWebPackConfig = require('./scripts/webpack-make-config')
+var commonOptions = require('./webpack.common.options')
 
-module.exports = makeWebPackConfig({
-  prod: true
-})
+module.exports = makeWebPackConfig(Object.assign(commonOptions, {
+  mode: "prod"
+}))

@@ -1,5 +1,13 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "javascript.validate.enable": false,
-  "eslint.enable": true
+  "eslint.enable": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "css.validate": false,
+  "css.lint.emptyRules": "ignore",
+  "files.watcherExclude": {
+    "./packaging/**": true,
+    "./dist/**": true
+  }
 }
