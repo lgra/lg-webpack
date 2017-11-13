@@ -3,7 +3,6 @@ require("./index.html") // dist/index.html
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import 'react-hot-loader/patch'
 import { AppContainer } from 'react-hot-loader'
 
 import App from "app"

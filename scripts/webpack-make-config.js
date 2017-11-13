@@ -150,6 +150,7 @@ module.exports = function (_options, _transform) {
 
     config.entry.app.unshift('webpack/hot/dev-server')
     config.entry.app.unshift('webpack-dev-server/client?' + config.devServerUrl.url)
+    config.entry.app.unshift('react-hot-loader/patch')
     config.plugins.unshift(new webpack.NamedModulesPlugin())
     config.plugins.unshift(new webpack.HotModuleReplacementPlugin())
   }
