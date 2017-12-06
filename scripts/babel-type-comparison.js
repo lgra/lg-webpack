@@ -6,11 +6,11 @@ var foo = <MyComponent />
 return foo.type === MyComponent
 
 because foo is based on a proxi of MyComponent class.
-Bytheway, in production, this code will return tree.
+Bytheway, in production, this code will return true.
 
 To make the comparison works in dev mode, a solution is to compare the type of the element to the type of a newly created componnent, and not the base class :
 return foo.type === (<MyComponent>).type
-will works
+will work
 
 That's the purpose of this babel plugin. It replaces every expression like { foo.type === MyComponent } by { foo.type === (<MyComponent>).type }
 */
