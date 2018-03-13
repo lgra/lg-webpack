@@ -26,10 +26,24 @@ options
   .alias: an optionnal map of alternative file or directory, applied to WebPack loader and PostCss.import
       See webpack.resolve.alias for enhanced documentation
       eg.: { '_shared/colors/controls.css': path.resolve(projectRoot, 'vr-ui/web_modules/_shared/colors/controls-legacy.css') }
+  .replacement: an optionnal array of replacement spec object used with webpack.NormalModuleReplacementPlugin
+      each object is {re: /a_regular_expression_passed_as_resourceRegExp_argument/, path: "a_string_passed_as_newResource_argument" }
   .port: http port to be serve by WebPackDevServer in dev mode, defaulted to 8080
   .host: http host to be serve by WebPackDevServer in dev mode, defaulted to 0.0.0.0
       0.0.0.0 is helpfull to be accessed externally using host IP
       'localhost' or require("os").hostname() are other possibilities
+  .rules: extra rules (an array of rule objects, or a rule object if only one).
+      eg. to copy json to dist folder (https://github.com/webpack/webpack/issues/6586) :
+      rules: {
+        type: 'javascript/auto',
+        test: /\.json$/,
+        // exclude: /(node_modules|package.json|src\/i18n)/,
+        include: /src\/[^/]+\.json$/,
+        use: [{
+          loader: 'file-loader',
+          options: { name: '[name].[ext]' },
+        }],
+      }
 
 */
 
@@ -41,7 +55,7 @@ var createResolver = require('./createResolver')
 
 var projectRoot = process.cwd()
 var packageOptions = require(path.resolve(projectRoot, 'package.json'))
-var externalLibs = Object.keys(packageOptions.hasOwnProperty('peerDependencies') ? packageOptions.peerDependencies : packageOptions.dependencies)
+// var externalLibs = Object.keys(packageOptions.hasOwnProperty('peerDependencies') ? packageOptions.peerDependencies : packageOptions.dependencies)
 
 var nodeModuleDir = path.resolve(projectRoot, 'node_modules')
 var webModuleDir = path.resolve(projectRoot, 'web_modules')
@@ -54,27 +68,32 @@ var babelOptions = JSON.parse(
 
 module.exports = function (_options, _transform) {
   _options = _options || {}
+  if (_options.mode && _options.mode === 'dev') { _options.mode = 'development' }
+  if (_options.mode && _options.mode === 'prod') { _options.mode = 'production' }
   var options = {
     entry: _options.entry || path.resolve(projectRoot, 'src/index.js'),
     dest: _options.dest || path.resolve(projectRoot, 'build'),
-    mode: _options.mode || (_options.dev ? "dev" : "prod"),
+    mode: _options.mode || (_options.dev ? 'development' : 'production'),
     port: _options.port || process.env.npm_package_config_port || 8080,
     host: _options.host || null,
+    rules: Boolean(_options.rules) ? (Array.isArray(_options.rules) ? _options.rules : [_options.rules]) : [],
     alias: _options.alias || {},
+    replacement: _options.replacement || null,
     subModuleDir: _options.subModuleDir && (Array.isArray(_options.subModuleDir) ? _options.subModuleDir : [_options.subModuleDir]) || []
   }
 
   var babelParams = Object.assign({ babelrc: false }, babelOptions)
 
   var config = {
+    mode: options.mode,
+
     entry: {
-      app: [options.entry],
-      vendors: externalLibs
+      app: [options.entry]
     },
 
     output: {
       path: options.dest,
-      filename: 'bundle.js'
+      filename: '[name].js'
     },
     resolve: {
       modules: [nodeModuleDir, webModuleDir].concat(options.subModuleDir),
@@ -114,28 +133,42 @@ module.exports = function (_options, _transform) {
               }
             }]
         },
-        { test: /\.json$/, use: ["json-loader"], exclude: ["package.json", /demo\//] },
-        { test: /demo\/[^\/]+\.json$/, use: "file-loader?name=[name].[ext]" },
         { test: /\.html$/, use: "file-loader?name=[name].[ext]" },
         { test: /\.svg$/, use: "raw-loader" },
         { test: /\.md$/, use: "raw-loader" },
         { test: /\.(ico|jpe?g|png|gif)$/, use: "file-loader?name=[name].[ext]" },
         { test: /\.(woff|ttf|otf|eot\?#.+|svg#.+)$/, use: "file-loader?name=fonts/[name].[ext]" }
-      ]
+      ].concat(options.rules)
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendors.js' })
-    ]
+    ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /node_modules/, // you may add "vendor.js" here if you want to
+            name: "vendor",
+            chunks: "initial",
+            enforce: true
+          }
+        }
+      }
+    }
+  }
+  if (options.replacement && options.replacement.length) {
+    options.replacement.forEach(ref => {
+      config.plugins.push(new webpack.NormalModuleReplacementPlugin(ref.re, ref.path))
+    })
   }
 
   // for production : set React production mode - build vendor chunk - uglify and compress
-  if (options.mode === "prod") {
+  if (options.mode === "production") {
     config.plugins.push(new webpack.DefinePlugin({ "process.env": { NODE_ENV: JSON.stringify("production") } }))
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }))
+    config.optimization.minimize = true
   }
 
   // for development : configure local dev server - set react-hot-loader
-  else if (options.mode === "dev") {
+  else if (options.mode === "development") {
     config.devServerUrl = {
       protocol: process.env.npm_package_config_protocol || "http://",
       hostname: options.host || process.env.npm_package_config_hostname || "0.0.0.0",

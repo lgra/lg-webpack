@@ -43,6 +43,7 @@
     "eslint-plugin-babel": "*",
     "eslint-plugin-react": "*",
     "webpack": "*",
+    "webpack-cli": "*",
     "webpack-dev-server": "*"
   }
 }

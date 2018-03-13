@@ -5,7 +5,7 @@ var options = {
   // the main entry file of the app
   entry: path.resolve(__dirname, 'app/main.jsx'),
   // the directory where to build the app
-  dest: path.resolve(__dirname, 'build'),
+  dest: path.resolve(__dirname, 'dist'),
   // optionnal: a path string or an array of path string
   subModuleDir: path.resolve(projectRoot, 'vr-ui/web_modules'),
   // optionnal: a map of alternative file or directory, applied to WebPack loader and PostCss.import.

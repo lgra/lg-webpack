@@ -11,8 +11,8 @@ import Group from "app/group"
 ReactDOM.render((
   <AppContainer>
     <App>
-      <Group label="option" nbr={4} />
-      <Group label="other" nbr={2} />
+      <Group label="option" nbr={6} />
+      <Group label="other" nbr={4} />
     </App>
   </AppContainer>
 ), document.querySelector(".theApp"))
