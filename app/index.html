@@ -4,6 +4,34 @@
 <head>
   <meta charset="utf-8">
   <title>Home</title>
+  <script>
+    // https://github.com/webpack/webpack-dev-server/issues/1343
+    // https://github.com/webpack/webpack/commit/fcf634c81956b7959f83bc9f140db37cc628e92a#diff-f995afcfa4e47968fef81836a5da0bca
+    // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+    if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function (searchElement, fromIndex) {
+          if (this == null) {
+            throw new TypeError('"this" is null or not defined')
+          }
+          var o = Object(this)
+          var len = o.length >>> 0
+          if (len === 0) {
+            return false
+          }
+          var n = fromIndex | 0
+          var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0)
+          while (k < len) {
+            if (o[k] === searchElement || isNaN(o[k]) && isNaN(searchElement)) {
+              return true
+            }
+            k++
+          }
+          return false
+        }
+      })
+    }
+  </script>
   <script src="vendor.js"></script>
 </head>
 
