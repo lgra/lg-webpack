@@ -22,7 +22,7 @@ import shouldUpdate from "utils/should-update-decorator"
 @shouldUpdate() // "verbose"
 class IconIE extends Component {
 
-  static state = {
+  state = {
     svgCounter: 0
   }
 

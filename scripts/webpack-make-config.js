@@ -163,6 +163,7 @@ module.exports = function (_options, _transform) {
 
   // for production : set React production mode - build vendor chunk - uglify and compress
   if (options.mode === "production") {
+    config.entry.app.unshift('babel-polyfill')
     config.plugins.push(new webpack.DefinePlugin({ "process.env": { NODE_ENV: JSON.stringify("production") } }))
     config.optimization.minimize = true
   }
@@ -184,6 +185,7 @@ module.exports = function (_options, _transform) {
     config.entry.app.unshift('webpack/hot/dev-server')
     config.entry.app.unshift('webpack-dev-server/client?' + config.devServerUrl.url)
     config.entry.app.unshift('react-hot-loader/patch')
+    config.entry.app.unshift('babel-polyfill')
     config.plugins.unshift(new webpack.NamedModulesPlugin())
     config.plugins.unshift(new webpack.HotModuleReplacementPlugin())
   }

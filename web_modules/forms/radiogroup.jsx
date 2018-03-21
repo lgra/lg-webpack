@@ -17,7 +17,7 @@ export default class RadioGroup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: RadioGroup + (++salt),
+      name: "RadioGroup" + (++salt),
     }
   }
 
