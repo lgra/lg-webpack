@@ -19,6 +19,7 @@ makeWebPackConfig(options) build a config file to be used as arguments of webpac
 options
   .entry: the main entry file to be transpile, defaulted to '[projectRoot]/src/index.js'
   .dest: the projet output directory, defaulted to '[projectRoot]/build'
+  .publicPath: the root path of the distributed app, defaulted du "/"
   .mode: "dev" for hotloading developpement (alternativelly .dev: true), or "prod" or nothing to production build
   .subModuleDir: a path string or an array of path string where to get shared modules,
       when its not found in '[projectRoot]/web_modules' or '[projectRoot]/node_modules'
@@ -76,6 +77,7 @@ module.exports = function (_options, _transform) {
     mode: _options.mode || (_options.dev ? 'development' : 'production'),
     port: _options.port || process.env.npm_package_config_port || 8080,
     host: _options.host || null,
+    publicPath: _options.publicPath || '/',
     rules: Boolean(_options.rules) ? (Array.isArray(_options.rules) ? _options.rules : [_options.rules]) : [],
     alias: _options.alias || {},
     replacement: _options.replacement || null,
@@ -93,7 +95,8 @@ module.exports = function (_options, _transform) {
 
     output: {
       path: options.dest,
-      filename: '[name].js'
+      filename: '[name].js',
+      publicPath: options.publicPath,
     },
     resolve: {
       modules: [nodeModuleDir, webModuleDir].concat(options.subModuleDir),
